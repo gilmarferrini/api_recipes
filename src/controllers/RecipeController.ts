@@ -12,17 +12,20 @@ interface IRecipe {
 
 class RecipeController {
 
-  async listAllRecipes(req: Request, res: Response) {
-    const allRecipes = await Recipe.find({})
-    const newShortID = await this.generateShortID();
-    console.log(newShortID);
+  async listAllRecipes(req: Request, res: Response): Promise<Response> {
+    const allRecipes = await Recipe.find({});
     return res.json(allRecipes);
   }
 
-  async createRecipe(req: Request, res: Response) {
+  async createRecipe(req: Request, res: Response): Promise<Response> {
     const { name, photoUrl, ingredients, stepByStep, additionalInformation } = req.body;
+
+    const allRecipes = await Recipe.find({});
+    const lastRecipeShortID: number = allRecipes[allRecipes.length - 1].toObject()["shortID"];
+    const newShortID: number = lastRecipeShortID + 1;
+
     const newRecipe: IRecipe = {
-      shortID: 1,
+      shortID: (allRecipes.length === 0) ? 1 : newShortID,
       name,
       photoUrl,
       ingredients,
@@ -36,12 +39,6 @@ class RecipeController {
     return res.json(newRecipe);
   }
 
-  private async generateShortID() {
-    const allRecipes = await Recipe.find({})
-    const lastShortID: number = allRecipes[allRecipes.length - 1].toObject().shortID;
-    return lastShortID;
-  }
-  
 }
 
 export default RecipeController;
