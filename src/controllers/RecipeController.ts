@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, response } from "express";
 import Recipe from "../models/RecipeSchema";
 
 interface IRecipe {
@@ -15,6 +15,12 @@ class RecipeController {
   async listAllRecipes(req: Request, res: Response): Promise<Response> {
     const allRecipes = await Recipe.find({});
     return res.json(allRecipes);
+  }
+
+  async findRecipe(req: Request, res: Response) {
+    const { id } = req.params;
+    const recipeRequired = await Recipe.find({ shortID: Number(id) });
+    return res.json(recipeRequired);
   }
 
   async createRecipe(req: Request, res: Response): Promise<Response> {
