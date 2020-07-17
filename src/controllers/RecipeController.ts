@@ -45,6 +45,7 @@ class RecipeController {
     return res.json(newRecipe);
   }
 
+
 }
 
 export default RecipeController;
