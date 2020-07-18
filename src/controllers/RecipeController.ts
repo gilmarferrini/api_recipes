@@ -7,7 +7,7 @@ interface IRecipe {
   name: string,
   ingredients: string[],
   stepByStep: string[],
-  additionalInformation: string
+  additionalInformation: string 
 }
 
 class RecipeController {
@@ -17,7 +17,7 @@ class RecipeController {
     return res.json(allRecipes);
   }
 
-  async findRecipe(req: Request, res: Response) {
+  async findRecipe(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const recipeRequired = await Recipe.find({ shortID: Number(id) });
     return res.json(recipeRequired);
@@ -44,8 +44,6 @@ class RecipeController {
       .catch( err => console.log(false))
     return res.json(newRecipe);
   }
-
-
 }
 
 export default RecipeController;
