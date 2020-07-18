@@ -16,8 +16,9 @@ server.use(express.json());
 server.use(function(req: Request, res: Response, next: NextFunction) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  return next();
+  next();
 });
+
 server.use(routes);
 
 server.listen(process.env.PORT || 3333);
