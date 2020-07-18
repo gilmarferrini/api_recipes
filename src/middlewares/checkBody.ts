@@ -10,7 +10,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
   ];
 
   for(let key of defaultKeys) {
-    if(req.body[key].trim() === undefined || "") {
+    if(req.body[key] === undefined || "") {
       return res.status(400).json({ message: "Campos inválidos" })
     }
   }
