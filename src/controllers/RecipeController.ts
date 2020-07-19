@@ -44,6 +44,21 @@ class RecipeController {
       .catch( err => console.log(false))
     return res.json(newRecipe);
   }
+
+  async updateRecipe(req: Request, res: Response){
+    const { name, photoUrl, ingredients, stepByStep, additionalInformation } = req.body;
+    const { id } = req.params;
+    await Recipe.updateOne({ shortID: +id}, { $set: {
+        shortID: id,
+        name: name,
+        photoUrl: photoUrl,
+        ingredients: ingredients,
+        stepByStep: stepByStep,
+        additionalInformation: additionalInformation
+      }
+    });
+    return res.json({ message: "Save sucess"});
+  }
 }
 
 export default RecipeController;
