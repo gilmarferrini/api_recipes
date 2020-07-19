@@ -9,5 +9,6 @@ route.get("/receitas", recipeController.listAllRecipes);
 route.get("/receitas/:id", recipeController.findRecipe);
 route.post("/receitas", checkBody, recipeController.createRecipe);
 route.put("/receitas/:id", checkBody, recipeController.updateRecipe);
+route.delete("/receitas/:id", recipeController.deleteRecipe);
 
 export default route;

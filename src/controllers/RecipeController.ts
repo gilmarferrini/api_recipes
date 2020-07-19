@@ -19,7 +19,7 @@ class RecipeController {
 
   async findRecipe(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const recipeRequired = await Recipe.find({ shortID: Number(id) });
+    const recipeRequired = await Recipe.find({ shortID: +id });
     return res.json(recipeRequired);
   }
 
@@ -45,7 +45,7 @@ class RecipeController {
     return res.json(newRecipe);
   }
 
-  async updateRecipe(req: Request, res: Response){
+  async updateRecipe(req: Request, res: Response): Promise<Response> {
     const { name, photoUrl, ingredients, stepByStep, additionalInformation } = req.body;
     const { id } = req.params;
     await Recipe.updateOne({ shortID: +id}, { $set: {
@@ -58,6 +58,13 @@ class RecipeController {
       }
     });
     return res.json({ message: "Save sucess"});
+  }
+
+  async deleteRecipe(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const recipeDeleted = await Recipe.findOne({ shortID: +id });
+    await Recipe.deleteOne({ shortID: +id });
+    return res.json(recipeDeleted);
   }
 }
 
