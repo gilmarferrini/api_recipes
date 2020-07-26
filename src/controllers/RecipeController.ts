@@ -13,7 +13,8 @@ interface IRecipe {
 class RecipeController {
 
   async index(req: Request, res: Response): Promise<Response> {
-    const { page = 1} = req.query;
+    let { page = 1} = req.query;
+    page = Number(page);
     const allRecipes = await Recipe.paginate({}, { page, limit: 3 });
     return res.json(allRecipes);
   }
