@@ -12,8 +12,8 @@ interface IRecipe {
 
 class RecipeController {
 
-  async listAllRecipes(req: Request, res: Response): Promise<Response> {
-    const allRecipes = await Recipe.find({});
+  async index(req: Request, res: Response): Promise<Response> {
+    const allRecipes = await Recipe.paginate({}, { page: 1, limit: 3 });
     return res.json(allRecipes);
   }
 
@@ -48,7 +48,7 @@ class RecipeController {
   async updateRecipe(req: Request, res: Response): Promise<Response> {
     const { name, photoUrl, ingredients, stepByStep, additionalInformation } = req.body;
     const { id } = req.params;
-    await Recipe.updateOne({ shortID: +id}, { $set: {
+    await Recipe.updateOne({ shortID: Number(id)}, { $set: {
         shortID: id,
         name: name,
         photoUrl: photoUrl,
@@ -63,7 +63,7 @@ class RecipeController {
   async deleteRecipe(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const recipeDeleted = await Recipe.findOne({ shortID: +id });
-    await Recipe.deleteOne({ shortID: +id });
+    await Recipe.deleteOne({ shortID: Number(id) });
     return res.json(recipeDeleted);
   }
 }

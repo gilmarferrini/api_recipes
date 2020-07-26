@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 const RecipeSchema: Schema = new mongoose.Schema({
   shortID: {
@@ -27,5 +28,7 @@ const RecipeSchema: Schema = new mongoose.Schema({
     default: 'Sem informações adicionais.'
   }
 });
+
+RecipeSchema.plugin(mongoosePaginate);
 
 export default mongoose.model('Recipes', RecipeSchema);
