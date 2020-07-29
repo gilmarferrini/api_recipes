@@ -6,9 +6,9 @@ const route = express.Router();
 const recipeController = new RecipeController();
 
 route.get("/receitas", recipeController.index);
-route.get("/receitas/:id", recipeController.findRecipe);
-route.post("/receitas", checkBody, recipeController.createRecipe);
-route.put("/receitas/:id", checkBody, recipeController.updateRecipe);
-route.delete("/receitas/:id", recipeController.deleteRecipe);
+route.get("/receitas/:id", recipeController.find);
+route.post("/receitas", checkBody, recipeController.create);
+route.put("/receitas/:id", checkBody, recipeController.update);
+route.delete("/receitas/:id", recipeController.delete);
 
 export default route;

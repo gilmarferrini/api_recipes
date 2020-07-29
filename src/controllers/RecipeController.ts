@@ -19,7 +19,7 @@ class RecipeController {
     return res.json(allRecipes);
   }
 
-  async findRecipe(req: Request, res: Response): Promise<Response> {
+  async find(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const recipeRequired = await Recipe.find({ shortID: +id });
     return res.json(recipeRequired);
@@ -64,7 +64,7 @@ class RecipeController {
 
   async deleteRecipe(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const recipeDeleted = await Recipe.findOne({ shortID: +id });
+    const recipeDeleted = await Recipe.findOne({ shortID: Number(id) });
     await Recipe.deleteOne({ shortID: Number(id) });
     return res.json(recipeDeleted);
   }
