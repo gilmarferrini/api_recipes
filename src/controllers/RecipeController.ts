@@ -21,7 +21,7 @@ class RecipeController {
 
   async find(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const recipeRequired = await Recipe.find({ shortID: +id });
+    const recipeRequired = await Recipe.find({ shortID: Number(id) });
     return res.json(recipeRequired);
   }
 
@@ -52,11 +52,11 @@ class RecipeController {
     const { id } = req.params;
     await Recipe.updateOne({ shortID: Number(id)}, { $set: {
         shortID: id,
-        name: name,
-        photoUrl: photoUrl,
-        ingredients: ingredients,
-        stepByStep: stepByStep,
-        additionalInformation: additionalInformation
+        name,
+        photoUrl,
+        ingredients,
+        stepByStep,
+        additionalInformation
       }
     });
     return res.json({ message: "Save sucess"});
